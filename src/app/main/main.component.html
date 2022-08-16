@@ -1,0 +1,76 @@
+<div id="app">
+    <div class="header">
+      <h1>FIVE M</h1>
+    </div>
+    <div class="searchbar">
+      <div class="searchNor">
+        <h2 class="searchNor__name">Search</h2>
+        <div class="searchNor__content">
+          <input 
+          [hidden] = "isChecked === true"
+          [(ngModel)] = "searchBar" name="search"
+          type='text' placeholder="Enter to search" class="searchNor__input">
+          <input 
+          [hidden] = "isChecked === false"
+          [(ngModel)]="searchTagsBar"
+          (keydown)="addTag($event)"
+          name="searchTags"
+          type='text' placeholder="Enter to search with Tags" class="searchNor__input">
+        </div>
+        <div class="changeSearch">
+            <mat-slide-toggle
+            class="example-margin"
+            [color]="color"
+            [checked]="checked"
+            [disabled]="disabled"
+            [(ngModel)]="isChecked">
+            
+            <span *ngIf="isChecked === true"> Search with Tags</span>
+            <span *ngIf="isChecked === false"> Normal search</span>
+            </mat-slide-toggle>
+            <button class="searchNor__removeTag" [hidden] = "isChecked === false" (click)="removeAddTags()">Remover all Tags</button>
+            <button class="searchNor__removeTag--off" [hidden] = "isChecked === true">Remover all Tags</button>
+        </div>
+        
+      </div> 
+      <div class="boxTags">
+        <div class="boxTag" *ngFor="let nameTag of nameTags | keyvalue">{{nameTag.value}} 
+          <mat-icon class="closeTag" (click)="removeTag(nameTag.key)">close</mat-icon></div>
+      </div> 
+    </div>
+    
+  
+  
+    <div class="contain">
+        <div class="table">
+            <table id="dataInfor" class="mat-elevation-z8">
+                <tr class="tableHeader">
+                    <th  *ngFor="let data of infors[0] | keyvalue"> 
+                      {{ data.key }}
+                      <span class="arrow">
+                        <mat-icon class="arrowUp" (click) = "orderBy(data.key, 'asc')">
+                          keyboard_arrow_up</mat-icon>
+                        <mat-icon class="arrowDown" (click) = "orderBy(data.key, 'desc')">
+                          keyboard_arrow_down</mat-icon>
+                      </span>
+                    </th>
+                </tr>
+                  <tr class="tableContent" [hidden] = "isChecked === true" *ngFor="let row of infors | filter:searchBar">
+                    <td *ngFor="let data of row | keyvalue">
+                      {{ data.value }}
+                    </td>
+                </tr>
+              </table>
+        </div>
+        
+          
+          
+    </div>
+  
+  
+    <div class="footer">
+      <div class="footer__contact"><p>Contact ....</p></div>
+      <div class="footer__icons">
+      </div>
+    </div>
+  </div>
